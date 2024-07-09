@@ -1,8 +1,24 @@
+# Usar una imagen base con JDK 17 y maven
 FROM maven:3-openjdk-17 AS build
-COPY . .
-RUN mvn clean package -DskipTests
 
+# Establecer directorio de trabajo
+WORKDIR /app
+
+# Copiar archivos de tu proyecto al directorio de trabajo
+
+COPY . /app
+
+# Ejecutar maven para construir el proyecto -DskipTests
+RUN mvn clean package  
+
+# Crear nueva imagen basada en jdk17
 FROM 17.0.11_9-jre-ubi9-minimal
-COPY --from=build /target/demo-0.0.1-SNAPSHOT.jar demo.jar
+
+# Exponer el puerto que utilizara la app
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","demo.jar"]
+
+# Copiar el archivo JAR construido desde la etapa anterior
+COPY --from=build /app/target/webhook-demo-0.0.1-SNAPSHOT.jar /app/webhook-demo-0.0.1-SNAPSHOT.jar
+
+# Establecer el punto de entrada para ejecutar la app
+ENTRYPOINT ["java","-jar","/app/webhook-demo-0.0.1-SNAPSHOT.jar"]
