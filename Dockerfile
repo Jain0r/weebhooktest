@@ -12,7 +12,7 @@ COPY . /app
 RUN mvn clean package  
 
 # Crear nueva imagen basada en jdk17
-FROM 17.0.11_9-jre-ubi9-minimal
+FROM eclipse-temurin:17
 
 # Exponer el puerto que utilizara la app
 EXPOSE 8080
