@@ -18,7 +18,7 @@ FROM eclipse-temurin:17
 EXPOSE 8080
 
 # Copiar el archivo JAR construido desde la etapa anterior
-COPY --from=build /app/target/webhook-demo-0.0.1-SNAPSHOT.jar /app/webhook-demo-0.0.1-SNAPSHOT.jar
+COPY --from=build /app/target/weebhook-demo-0.0.1-SNAPSHOT.jar /app/weebhook-demo-0.0.1-SNAPSHOT.jar
 
 # Establecer el punto de entrada para ejecutar la app
-ENTRYPOINT ["java","-jar","/app/webhook-demo-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java","-jar","/app/weebhook-demo-0.0.1-SNAPSHOT.jar"]
