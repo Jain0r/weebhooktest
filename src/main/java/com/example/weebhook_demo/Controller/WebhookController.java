@@ -4,6 +4,7 @@ package com.example.weebhook_demo.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +31,12 @@ public class WebhookController {
     }
     
 
-    @PostMapping("/webhooks")
-    public ResponseEntity<String> handleWebhook(@RequestBody String payload) {
-        //TODO: process POST request
-        System.out.println("received payload: " + payload);
-        return ResponseEntity.ok("EVENT_RECEIVED"); 
-    }
+    // @PostMapping("/webhooks")
+    // public ResponseEntity<String> handleWebhook(@RequestBody String payload) {
+    //     //TODO: process POST request
+    //     System.out.println("received payload: " + payload);
+    //     return ResponseEntity.ok("EVENT_RECEIVED"); 
+    // }
 
 
     @GetMapping("/tezzzt")
@@ -48,6 +49,18 @@ public class WebhookController {
         }
 
     }
+    @PostMapping("/webhooks")
+    public ResponseEntity<String> handleWebhook(@RequestBody String payload,
+                                                @RequestHeader("X-Hub-Signature-256") String signature) {
+        // Aquí puedes verificar la firma y procesar los datos
+        System.out.println("Received payload: " + payload);
+        System.out.println("Signature: " + signature);
+        
+        // Aquí puedes añadir la lógica para procesar el payload recibido
+        return ResponseEntity.ok("EVENT_RECEIVED");
+    }
+
+
 
     @GetMapping("/hello")
     public String sayHello() {
